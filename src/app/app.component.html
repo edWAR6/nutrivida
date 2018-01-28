@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="mat-elevation-z12">
+    <mat-toolbar-row>
+        <img class="logo" src="../../assets/logo_nutrivida.png" alt="Nutrivida">            
+    </mat-toolbar-row>
+    
+    <mat-toolbar-row *ngIf="angularFireAuth.authState | async; let user; else showLogin">
+        <span class="spacer"></span>
+        <button mat-button (click)="goToAdmin()">Admin</button>
+        <button mat-button (click)="logout()">Salir</button>
+        <img class="photo mat-elevation-z6" src="{{ user.photoURL }}" alt="{{ user.displayName }}">                    
+    </mat-toolbar-row>
+    <ng-template #showLogin>
+        <mat-toolbar-row>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="login()">
+                <mat-icon class="facebook-login" svgIcon="facebook"></mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </ng-template>
+</mat-toolbar>
+<router-outlet></router-outlet>
+

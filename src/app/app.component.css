@@ -1,0 +1,19 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+img.logo{
+    height: 5em;
+    position: absolute;
+    top: 0;
+}
+
+img.photo{
+    border-radius: 50%;
+    height: 50px;
+}
+
+div.container,
+footer {
+    height: calc(50vh - 64px);
+}

@@ -1,0 +1,24 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav class="example-sidenav">
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon" (click)="goToMap()">home</mat-icon>
+      
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">assignment</mat-icon>
+      
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">directions_walk</mat-icon>
+      
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon" (click)="goToClients()">face</mat-icon>
+      
+    </button>
+  </mat-sidenav>
+  <mat-button-toggle (click)="sidenav.open()">
+    <mat-icon>menu</mat-icon>
+  </mat-button-toggle>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
