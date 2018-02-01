@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyABi5SFawofQSVPUE5AwXCQGmQ42IYiZTA',
-    authDomain: 'nutrivida-46f77.firebaseapp.com',
-    databaseURL: 'https://nutrivida-46f77.firebaseio.com',
-    projectId: 'nutrivida-46f77',
-    storageBucket: 'nutrivida-46f77.appspot.com',
-    messagingSenderId: '383112145110'
+    apiKey: 'AIzaSyAhn54h0YqgRSwhK7ZmcAXoo0LmUFrVGIA',
+    authDomain: 'nutrivida-bot.firebaseapp.com',
+    databaseURL: 'https://nutrivida-bot.firebaseio.com',
+    projectId: 'nutrivida-bot',
+    storageBucket: 'nutrivida-bot.appspot.com',
+    messagingSenderId: '602974529857'
   }
 };

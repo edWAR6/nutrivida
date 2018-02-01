@@ -19,44 +19,44 @@ const getInformation = function(parameters) {
   }
 }
 
-// function getPrice(name) {
-//   return new Promise((resolve, reject) => {
-//     products.where('name', '==', name).get().then(snapshot => {
-//       snapshot.forEach(document => {
-//         console.log(document.id, '=>',document.data());
-//         resolve({
-//           fulfillmentMessages: [{
-//             'platform': 'ACTIONS_ON_GOOGLE',
-//             'simple_responses': {
-//               'simple_responses': [
-//                 {
-//                   'text_to_speech': `${document.data().consumerPrice} colones, ¿cuántos desea pedir?`,
-//                   'display_text': `₡${document.data().consumerPrice}`
-//                 }
-//               ]
-//             }
-//           }],
-//           fulfillmentText: `₡${document.data().consumerPrice}` // displayed response
-//         });
-//       });
-//     }).catch(error => {
-//       console.log('Error getting documents', error);
-//       reject(error);
-//     });
-//   });
-// }
-
 function getPrice(name) {
   return new Promise((resolve, reject) => {
-    newproducts.get().then(snapshot => {
-      snapshot.forEach(document => {
-        products.doc(document.data().name).set(
-          {...document.data()}
-        );
-      });
+    products.doc(name).get().then(document => {
+      console.log(`document ${document}`);
+      if (document.exists) {
+        resolve({
+          fulfillmentMessages: [{
+            'platform': 'ACTIONS_ON_GOOGLE',
+            'simple_responses': {
+              'simple_responses': [
+                {
+                  'text_to_speech': `${document.data().consumerPrice} colones, ¿cuántos desea pedir?`,
+                  'display_text': `₡${document.data().consumerPrice}`
+                }
+              ]
+            }
+          }],
+          fulfillmentText: `₡${document.data().consumerPrice}` // displayed response
+        });
+      }
+    }).catch(error => {
+      console.log('Error getting documents', error);
+      reject(error);
     });
   });
 }
+
+// function getPrice(name) {
+//   return new Promise((resolve, reject) => {
+//     newproducts.get().then(snapshot => {
+//       snapshot.forEach(document => {
+//         products.doc(document.data().name).set(
+//           {...document.data()}
+//         );
+//       });
+//     });
+//   });
+// }
 
 function about(subject) {
   return new Promise((resolve, reject) => {

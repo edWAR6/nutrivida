@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import {DialogflowApp} from 'actions-on-google';
 import {getInformation} from './askForInformation';
 import {addToCart, getCart} from './orders';
+import { addMessage } from './messages';
 
 export const nutrividaFulfillment = functions.https.onRequest((request, response) => {
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
@@ -20,39 +21,44 @@ function processRequest(request, response){
   let inputContexts = request.body.queryResult.contexts;
   let requestSource = (request.body.originalDetectIntentRequest) ? request.body.originalDetectIntentRequest.source : undefined;
   let session = (request.body.session) ? request.body.session : undefined;
+  let queryText = request.body.queryResult.queryText || '';
 
-  switch(action) {
-    case 'askForInformation': {
-      getInformation(parameters).then(responseToUser => {
+  addMessage(action, queryText).then(() => {
+    switch(action) {
+      case 'askForInformation': {
+        getInformation(parameters).then(responseToUser => {
+          sendResponse(responseToUser);
+        });
+        break;
+      }
+      case 'makeAnOrder': {
+        addToCart(parameters).then(responseToUser => {
+          sendResponse(responseToUser);
+        });
+        break;
+      } 
+      default: {
+        let responseToUser = {
+          fulfillmentMessages: [{
+            'platform': 'ACTIONS_ON_GOOGLE',
+            'simple_responses': {
+              'simple_responses': [
+                {
+                  'text_to_speech': '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas!',
+                  'display_text': '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas! 🥣🍹'
+                }
+              ]
+            }
+          }],
+          fulfillmentText: '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas! 🥣🍹' // displayed response
+        };
         sendResponse(responseToUser);
-      });
-      break;
+        break;
+      }
     }
-    case 'makeAnOrder': {
-      addToCart(parameters).then(responseToUser => {
-        sendResponse(responseToUser);
-      });
-      break;
-    } 
-    default: {
-      let responseToUser = {
-        fulfillmentMessages: [{
-          'platform': 'ACTIONS_ON_GOOGLE',
-          'simple_responses': {
-            'simple_responses': [
-              {
-                'text_to_speech': '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas!',
-                'display_text': '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas! 🥣🍹'
-              }
-            ]
-          }
-        }],
-        fulfillmentText: '¡Recuerde que puedo responderle preguntas y venderle los productos de Nutrivida y Florida Bebidas! 🥣🍹' // displayed response
-      };
-      sendResponse(responseToUser);
-      break;
-    }
-  }
+  }).catch(error => {
+    console.log(`Error: ${error}`);
+  });
 
   function sendResponse (responseToUser) {
     // if the response is a string send it as a response to the user
