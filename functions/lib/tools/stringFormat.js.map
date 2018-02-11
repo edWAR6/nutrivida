@@ -1,0 +1,1 @@
+{"version":3,"file":"stringFormat.js","sourceRoot":"","sources":["../../src/tools/stringFormat.ts"],"names":[],"mappings":";;AAAA,oBAAoB,IAAY;IAC9B,IAAI,OAAO,GAAG,IAAI,CAAC,OAAO,CAAC,IAAI,EAAE,EAAE,CAAC,CAAC;IACrC,OAAO,GAAG,OAAO,CAAC,OAAO,CAAC,aAAa,EAAE,OAAO,CAAC,CAAC;IAClD,MAAM,CAAC,OAAO,CAAC;AACjB,CAAC;AAEO,gCAAU"}

@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import {DialogflowApp} from 'actions-on-google';
-import {getInformation} from './askForInformation';
-import {addToCart, getCart} from './orders';
-import { addMessage } from './messages';
+import {getInformation} from './actions/information';
+import {addToCart, getCart} from './actions/orders';
+import {saveMessage} from './actions/message';
+import {getPrices} from './actions/price';
 
 export const nutrividaFulfillment = functions.https.onRequest((request, response) => {
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
@@ -10,25 +11,38 @@ export const nutrividaFulfillment = functions.https.onRequest((request, response
   if (request.body.queryResult) {
     processRequest(request, response);
   } else {
-    console.log('Invalid Request');
+    console.log('Error: Invalid Request');
     return response.status(400).end('Invalid Webhook Request (expecting v2 webhook request)');
   }
 });
 
 function processRequest(request, response){
-  let action = (request.body.queryResult.action) ? request.body.queryResult.action : 'default';
-  let parameters = request.body.queryResult.parameters || {};
-  let inputContexts = request.body.queryResult.contexts;
-  let requestSource = (request.body.originalDetectIntentRequest) ? request.body.originalDetectIntentRequest.source : undefined;
-  let session = (request.body.session) ? request.body.session : undefined;
-  let queryText = request.body.queryResult.queryText || '';
+  const action = (request.body.queryResult.action) ? request.body.queryResult.action : 'default';
+  const parameters = request.body.queryResult.parameters || [];
+  const inputContexts = request.body.queryResult.contexts;
+  const requestSource = (request.body.originalDetectIntentRequest) ? request.body.originalDetectIntentRequest.source : undefined;
+  const session = (request.body.session) ? request.body.session : undefined;
+  const queryText = request.body.queryResult.queryText || '';
 
-  addMessage(action, queryText).then(() => {
+  saveMessage(action, queryText).then(() => {
+    filterAction();
+  }).catch(error => {
+    console.log(`Error adding a message: ${error}`);
+  });
+
+  function filterAction() {
     switch(action) {
       case 'askForInformation': {
         getInformation(parameters).then(responseToUser => {
           sendResponse(responseToUser);
         });
+        break;
+      }
+      case 'askForPrice': {
+        getPrices(parameters.products).then(responseToUser => {
+          console.log('Response to Dialogflow: ' + JSON.stringify(responseToUser));
+          response.json(responseToUser);
+        })
         break;
       }
       case 'makeAnOrder': {
@@ -38,7 +52,7 @@ function processRequest(request, response){
         break;
       } 
       default: {
-        let responseToUser = {
+        const responseToUser = {
           fulfillmentMessages: [{
             'platform': 'ACTIONS_ON_GOOGLE',
             'simple_responses': {
@@ -56,18 +70,16 @@ function processRequest(request, response){
         break;
       }
     }
-  }).catch(error => {
-    console.log(`Error: ${error}`);
-  });
+  }
 
   function sendResponse (responseToUser) {
     // if the response is a string send it as a response to the user
     if (typeof responseToUser === 'string') {
-      let responseJson = {fulfillmentText: responseToUser}; // displayed response
+      const responseJson = {fulfillmentText: responseToUser}; // displayed response
       response.json(responseJson); // Send response to Dialogflow
     } else {
       // If the response to the user includes rich responses or contexts send them to Dialogflow
-      let responseJson = {fulfillmentText: null, fulfillmentMessages: null, outputContexts: null};
+      const responseJson = {fulfillmentText: null, fulfillmentMessages: null, outputContexts: null};
       // Define the text response
       responseJson.fulfillmentText = responseToUser.fulfillmentText;
       // Optional: add rich messages for integrations (https://dialogflow.com/docs/rich-messages)
@@ -84,24 +96,3 @@ function processRequest(request, response){
     }
   }
 }
-
-
-
-
-
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
-
-// export const addMessage = functions.https.onRequest((request, response) => {
-//   // Grab the text parameter.
-//   const original = request.query.text;
-//   // Push the new message into the Realtime Database using the Firebase Admin SDK.
-//   admin.firestore().collection('messages').add({original: original}).then(writeResult => {
-//     // Send back a message that we've succesfully written the message
-//     response.json({result: `Message with ID: ${writeResult.id} added.`});
-//     return;
-//   }).catch (error => {
-//     console.log(error);
-//   });
-// });

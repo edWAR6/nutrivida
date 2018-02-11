@@ -1,0 +1,1 @@
+{"version":3,"file":"simpleResponse.js","sourceRoot":"","sources":["../../src/webhook/simpleResponse.ts"],"names":[],"mappings":";;AAAA;IAEE,YAAY,kBAAyC,EAAE;QACrD,IAAI,CAAC,eAAe,GAAG,eAAe,CAAC;IACzC,CAAC;CACF;AAWO,0CAAe;AATvB;IAGE,YAAY,MAAc,EAAE,IAAY;QACtC,IAAI,CAAC,YAAY,GAAG,IAAI,CAAC;QACzB,IAAI,CAAC,cAAc,GAAG,MAAM,CAAC;IAC/B,CAAC;CACF;AAEwB,wCAAc"}

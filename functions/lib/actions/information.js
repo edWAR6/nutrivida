@@ -163,4 +163,4 @@ function about(subject) {
         });
     });
 }
-//# sourceMappingURL=askForInformation.js.map
+//# sourceMappingURL=information.js.map

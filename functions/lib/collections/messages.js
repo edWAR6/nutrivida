@@ -5,10 +5,10 @@ const admin = require("firebase-admin");
 if (!admin.apps.length) {
     admin.initializeApp(functions.config().firebase);
 }
-const messages = admin.firestore().collection('messages');
+const messagesReference = admin.firestore().collection('messages');
 function addMessage(action, message) {
     return new Promise((resolve, reject) => {
-        messages.add({
+        messagesReference.add({
             timestamp: admin.firestore.FieldValue.serverTimestamp(),
             action: action,
             message: message
@@ -16,7 +16,7 @@ function addMessage(action, message) {
             resolve();
         })
             .catch(function (error) {
-            console.error("Error adding message: ", error);
+            console.error("Error saving message: ", error);
             reject(error);
         });
     });

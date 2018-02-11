@@ -1,0 +1,1 @@
+{"version":3,"file":"response.js","sourceRoot":"","sources":["../../src/webhook/response.ts"],"names":[],"mappings":";;AAEA;IAGE,YAAY,eAAwB,EAAE,sBAAsC,EAAE;QAC5E,IAAI,CAAC,eAAe,GAAG,eAAe,CAAC;QACvC,IAAI,CAAC,mBAAmB,GAAG,mBAAmB,CAAC;IACjD,CAAC;CACF;AAEO,4BAAQ"}
