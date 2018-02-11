@@ -87,7 +87,7 @@ const appRoutes: Routes = [
     MatSidenavModule,
     MatButtonToggleModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBlYcwpI9sZsaTMxjQXUgGvTIj5R1ejYPE'
+      apiKey: 'AIzaSyBHO1154_RDTti3RRzjmZNf83FJnj5rK0U'
     })
   ],
   providers: [],
