@@ -1,3 +1,12 @@
+mat-toolbar{
+  z-index: 1000;
+}
+
+.scroll {
+  height: calc(100vh - 168px);
+  overflow: auto;
+}
+
 .spacer {
     flex: 1 1 auto;
 }
@@ -6,6 +15,7 @@ img.logo{
     height: 5em;
     position: absolute;
     top: 0;
+    left: 0;
 }
 
 img.photo{
@@ -16,4 +26,10 @@ img.photo{
 div.container,
 footer {
     height: calc(50vh - 64px);
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .scroll {
+    height: calc(100vh - 112px);
+  }
 }

@@ -1,0 +1,9 @@
+<mat-form-field [color]="recording ? 'warn' : 'accent'" class="chat-box-input">
+  <input matInput placeholder="¿En qué le puedo ayudar?" (keyup)="onKey($event)" [(ngModel)]="message.content">
+  <button mat-button matSuffix mat-icon-button aria-label="Enviar" (click)="stopAndSend()" [color]="recording ? 'warn' : 'accent'">
+    <mat-icon>send</mat-icon>
+  </button>
+</mat-form-field>
+<button class="record" mat-button mat-icon-button aria-label="Grabar" (click)="onRecord()" [color]="recording ? 'warn' : 'accent'">
+  <mat-icon>mic</mat-icon>
+</button>

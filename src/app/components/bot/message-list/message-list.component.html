@@ -1,0 +1,5 @@
+<div class="container">
+  <div id="chat">
+    <app-message-item *ngFor="let message of messages" [message]="message" [ngClass]="{'request': message.origin === 'request', 'response': message.origin === 'response'}"></app-message-item>
+  </div>
+</div>

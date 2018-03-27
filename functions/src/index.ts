@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions';
-import {DialogflowApp} from 'actions-on-google';
-import {getInformation} from './actions/information';
+import * as Information from './actions/information';
 import {addToCart, getCart} from './actions/orders';
 import {saveMessage} from './actions/message';
 import {getPrices} from './actions/price';
@@ -33,7 +32,7 @@ function processRequest(request, response){
   function filterAction() {
     switch(action) {
       case 'askForInformation': {
-        getInformation(parameters).then(responseToUser => {
+        Information.getInformation(parameters).then(responseToUser => {
           sendResponse(responseToUser);
         });
         break;
@@ -81,7 +80,9 @@ function processRequest(request, response){
       // If the response to the user includes rich responses or contexts send them to Dialogflow
       const responseJson = {fulfillmentText: null, fulfillmentMessages: null, outputContexts: null};
       // Define the text response
-      responseJson.fulfillmentText = responseToUser.fulfillmentText;
+      if (responseToUser.fulfillmentText) {
+        responseJson.fulfillmentText = responseToUser.fulfillmentText;
+      }
       // Optional: add rich messages for integrations (https://dialogflow.com/docs/rich-messages)
       if (responseToUser.fulfillmentMessages) {
         responseJson.fulfillmentMessages = responseToUser.fulfillmentMessages;

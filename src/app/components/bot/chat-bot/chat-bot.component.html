@@ -1,0 +1,13 @@
+<mat-card id="bot">
+  <mat-card-header>
+    <div mat-card-avatar class="bot-image"></div>
+    <mat-card-title>Bot Nutrivida</mat-card-title>
+    <mat-card-subtitle>Empoderando a las mujeres a través de la tecnología.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <app-message-list [messages]="messages"></app-message-list>
+  </mat-card-content>
+  <div id="mat-card-box">
+    <app-message-form [message]="message" [messages]="messages"></app-message-form>
+  </div>
+</mat-card>

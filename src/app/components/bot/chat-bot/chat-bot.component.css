@@ -1,0 +1,49 @@
+mat-card{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-header{
+  background-color: #2b303e;
+  padding: 10px 10px 0;
+}
+
+.bot-image{
+  background-image: url('https://storage.googleapis.com/cloudprod-apiai/9d956518-48bc-47c0-9a58-b87ef742c1d1_s.png');
+  background-size: cover;
+}
+
+.mat-card-title{
+  color: white;
+}
+
+.mat-card-subtitle{
+  color: #B7BBC4;
+}
+
+mat-card-content{
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#mat-card-box{
+  padding: 10px 10px 0;
+  margin: 0;
+  border-top: 1px solid lightgray;
+}
+
+@media (min-width:600px) {
+  mat-card{
+    max-width: 500px;
+    max-height: 530px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 25px;
+  }
+}

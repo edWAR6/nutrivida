@@ -13,7 +13,7 @@ function getProductByName(name: string) {
       if (document.exists) {
         resolve(document.data());
       } else {
-        resolve();
+        resolve({notFound: true, name});
       }
     }).catch(error => {
       console.error('Error executing product.getByName', error);

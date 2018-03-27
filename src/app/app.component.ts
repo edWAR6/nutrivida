@@ -14,7 +14,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, public angularFireAuth: AngularFireAuth, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, db: AngularFirestore) {
+  constructor(
+  private router: Router,
+  public angularFireAuth: AngularFireAuth,
+  private iconRegistry: MatIconRegistry,
+  private sanitizer: DomSanitizer,
+  private db: AngularFirestore) {
     iconRegistry.addSvgIcon('facebook', sanitizer.bypassSecurityTrustResourceUrl('../assets/fb.svg'));
     this.angularFireAuth.authState.subscribe((data) => {
       if (data) {

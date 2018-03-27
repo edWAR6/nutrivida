@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
-const information_1 = require("./actions/information");
+const Information = require("./actions/information");
 const orders_1 = require("./actions/orders");
 const message_1 = require("./actions/message");
 const price_1 = require("./actions/price");
@@ -31,7 +31,7 @@ function processRequest(request, response) {
     function filterAction() {
         switch (action) {
             case 'askForInformation': {
-                information_1.getInformation(parameters).then(responseToUser => {
+                Information.getInformation(parameters).then(responseToUser => {
                     sendResponse(responseToUser);
                 });
                 break;
@@ -79,7 +79,9 @@ function processRequest(request, response) {
             // If the response to the user includes rich responses or contexts send them to Dialogflow
             const responseJson = { fulfillmentText: null, fulfillmentMessages: null, outputContexts: null };
             // Define the text response
-            responseJson.fulfillmentText = responseToUser.fulfillmentText;
+            if (responseToUser.fulfillmentText) {
+                responseJson.fulfillmentText = responseToUser.fulfillmentText;
+            }
             // Optional: add rich messages for integrations (https://dialogflow.com/docs/rich-messages)
             if (responseToUser.fulfillmentMessages) {
                 responseJson.fulfillmentMessages = responseToUser.fulfillmentMessages;

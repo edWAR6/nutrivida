@@ -1,0 +1,19 @@
+:host {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.chat-box-input{
+  flex: 1;
+}
+
+.record {
+  flex-shrink: 0;
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  .record {
+    display: none;
+  }
+}

@@ -4,12 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { MatCardModule } from '@angular/material/card';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -31,6 +32,12 @@ import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AnaliticsComponent } from './analitics/analitics.component';
 import { MapComponent } from './map/map.component';
+import { MatInputModule } from '@angular/material/input';
+import { ChatBotComponent } from './components/bot/chat-bot/chat-bot.component';
+import { MessageListComponent } from './components/bot/message-list/message-list.component';
+import { MessageItemComponent } from './components/bot/message-item/message-item.component';
+import { MessageFormComponent } from './components/bot/message-form/message-form.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -68,10 +75,15 @@ const appRoutes: Routes = [
     ClientOrdersComponent,
     PageNotFoundComponent,
     AnaliticsComponent,
-    MapComponent
+    MapComponent,
+    ChatBotComponent,
+    MessageListComponent,
+    MessageItemComponent,
+    MessageFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
@@ -86,6 +98,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatSidenavModule,
     MatButtonToggleModule,
+    MatCardModule,
+    MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBHO1154_RDTti3RRzjmZNf83FJnj5rK0U'
     })

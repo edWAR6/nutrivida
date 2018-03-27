@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const response_1 = require("./../webhook/response");
 const message_1 = require("./../webhook/message");
+const text_1 = require("./../webhook/text");
 const simpleResponse_1 = require("./../webhook/simpleResponse");
 const products_1 = require("./../collections/products");
 const stringFormat_1 = require("../tools/stringFormat");
@@ -14,11 +15,16 @@ function getPrices(productNames) {
         Promise.all(promises).then(products => {
             let speech = '';
             let text = '';
+            console.log('products: ', products);
             products.forEach(product => {
-                speech += `, ${product.consumerPrice} colones`;
-                text += `, ${product.name}: ₡${product.consumerPrice}`;
+                if (!product.notFound) {
+                    speech += `, ${product.consumerPrice} colones`;
+                    text += `, ${product.name}: ₡${product.consumerPrice}`;
+                }
             });
-            const response = new response_1.Response(stringFormat_1.formatList(text), [new message_1.Message(message_1.Platform.google, new simpleResponse_1.SimpleResponses([new simpleResponse_1.SimpleResponse(stringFormat_1.formatList(speech), stringFormat_1.formatList(text))]))]);
+            const response = new response_1.Response(stringFormat_1.formatList(text), [new message_1.Message(message_1.Platform.unspecified, new text_1.Text([stringFormat_1.formatList(text)])),
+                new message_1.Message(message_1.Platform.google, undefined, new simpleResponse_1.SimpleResponses([new simpleResponse_1.SimpleResponse(stringFormat_1.formatList(speech), stringFormat_1.formatList(text))])),
+                new message_1.Message(message_1.Platform.facebook, new text_1.Text([stringFormat_1.formatList(text)]))]);
             resolve(response);
         });
     });

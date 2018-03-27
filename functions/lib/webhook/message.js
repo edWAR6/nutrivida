@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Message {
-    constructor(platform, simpleResponses) {
+    constructor(platform, text, simpleResponses, card, basicCard) {
         this.platform = platform;
+        this.text = text;
         this.simpleResponses = simpleResponses;
+        this.card = card;
+        this.basicCard = basicCard;
     }
 }
 exports.Message = Message;
